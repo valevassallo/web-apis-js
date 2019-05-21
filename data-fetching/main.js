@@ -6,6 +6,7 @@ async function getData() {
     .then(films => {
       return films.map(film => {
         showDom(film);
+        localStorage.setItem("storedFilms", JSON.stringify(films));
       });
     });
 }
