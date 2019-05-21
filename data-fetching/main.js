@@ -1,17 +1,34 @@
 const URL = "https://ghibliapi.herokuapp.com/films";
 const filmsList = document.getElementById("films");
 
+const storage = localStorage.getItem("storedFilms");
+
 async function getData() {
   await fetch(URL)
     .then(response => response.json())
     .then(films => {
+      if (storage != null) {
+        console.log("STORAGE", storage);
+        let newValues = getUniqueList(JSON.parse(storage), films);
+        console.log(newValues);
+        films.push(...newValues);
+        // THIS IS TO TRY IF THE DATA GETS UPDATED
+        // newValues = [
+        //   {
+        //     id: "zzzztracosa",
+        //     title: "sdfasdfasdfasdfsdf in the Sky",
+        //     description: "ASDFADSFASDFASDFSDFAS"
+        //   }
+        // ];
+        showDom(newValues);
+      }
       showDom(films);
       localStorage.setItem("storedFilms", JSON.stringify(films));
     });
 }
 
-function showDom(element) {
-  return element.map(film => {
+function showDom(elements) {
+  return elements.map(film => {
     let li = document.createElement("li"),
       h2 = document.createElement("h2"),
       p = document.createElement("p");
@@ -24,11 +41,13 @@ function showDom(element) {
   });
 }
 
-const storage = localStorage.getItem("storedFilms");
-
-if (storage != null) {
-  let parsedFilms = JSON.parse(storage);
-  showDom(parsedFilms);
+function getUniqueList(arrayOld, arrayFetch) {
+  var diff = arrayFetch.filter(function(elementFetch) {
+    return !arrayOld.some(function(elementOld) {
+      return elementFetch.id === elementOld.id;
+    });
+  });
+  return diff;
 }
 
 getData();
