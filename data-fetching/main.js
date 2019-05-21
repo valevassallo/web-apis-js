@@ -8,9 +8,7 @@ async function getData() {
     .then(response => response.json())
     .then(films => {
       if (storage != null) {
-        console.log("STORAGE", storage);
         let newValues = getUniqueList(JSON.parse(storage), films);
-        console.log(newValues);
         films.push(...newValues);
         // THIS IS TO TRY IF THE DATA GETS UPDATED
         // newValues = [
