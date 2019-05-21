@@ -5,17 +5,21 @@ async function getData() {
     .then(response => response.json())
     .then(films => {
       return films.map(film => {
-        let li = document.createElement("li"),
-          h2 = document.createElement("h2"),
-          p = document.createElement("p");
-
-        h2.innerHTML = `${film.title}`;
-        p.innerHTML = `${film.description}`;
-        li.appendChild(h2);
-        li.appendChild(p);
-        filmsList.appendChild(li);
+        showDom(film);
       });
     });
+}
+
+function showDom(element) {
+  let li = document.createElement("li"),
+    h2 = document.createElement("h2"),
+    p = document.createElement("p");
+
+  h2.innerHTML = `${element.title}`;
+  p.innerHTML = `${element.description}`;
+  li.appendChild(h2);
+  li.appendChild(p);
+  filmsList.appendChild(li);
 }
 
 getData();
