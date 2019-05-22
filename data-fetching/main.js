@@ -7,20 +7,20 @@ async function getData() {
   await fetch(URL)
     .then(response => response.json())
     .then(films => {
+      showDom(films);
       if (storage != null) {
         let newValues = getUniqueList(JSON.parse(storage), films);
-        films.push(...newValues);
         // THIS IS TO TRY IF THE DATA GETS UPDATED
         // newValues = [
         //   {
-        //     id: "zzzztracosa",
-        //     title: "sdfasdfasdfasdfsdf in the Sky",
+        //     id: "1q2w3e4r5t6y",
+        //     title: "Title Test",
         //     description: "ASDFADSFASDFASDFSDFAS"
         //   }
         // ];
+        films.push(...newValues);
         showDom(newValues);
       }
-      showDom(films);
       localStorage.setItem("storedFilms", JSON.stringify(films));
     });
 }
